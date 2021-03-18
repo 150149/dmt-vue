@@ -121,7 +121,10 @@
                     <el-input v-model="form.length"></el-input>
                 </el-form-item>
                 <el-form-item label="签到人员">
-                    <el-input :disabled="show2" v-model="form.name"></el-input>
+                    <el-input :disabled="show2"
+                              v-model="form.name"
+                              maxlength="4"
+                              show-word-limit></el-input>
                 </el-form-item>
                 <el-form-item label="备注">
                     <el-input v-model="form.remark" placeholder="如果不是值班请填写备注"></el-input>
@@ -161,7 +164,9 @@
                     <el-input v-model="form.length"></el-input>
                 </el-form-item>
                 <el-form-item label="签到人员">
-                    <el-input  v-model="form.name"></el-input>
+                    <el-input  v-model="form.name"
+                               maxlength="4"
+                               show-word-limit></el-input>
                 </el-form-item>
                 <el-form-item label="备注">
                     <el-input v-model="form.remark" placeholder="如果不是值班请填写备注"></el-input>

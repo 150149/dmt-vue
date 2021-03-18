@@ -149,7 +149,9 @@
                     <el-input v-model="form.room"></el-input>
                 </el-form-item>
                 <el-form-item label="登记人员">
-                    <el-input v-model="form.name"></el-input>
+                    <el-input v-model="form.name"
+                              maxlength="4"
+                              show-word-limit></el-input>
                 </el-form-item>
                 <el-form-item label="故障现象">
                     <el-input v-model="form.reason"></el-input>
