@@ -104,7 +104,7 @@
                 },
                 editVisible : false,
                 id: '',
-                photoUrl :'http://localhost:8444/api/TableUpload', // 上传图片地址
+                photoUrl :'http://dmt.dgut.edu.cn/api/TableUpload', // 上传图片地址
                 loading: true,
                 usertype: '',
             }

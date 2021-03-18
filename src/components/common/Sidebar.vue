@@ -74,6 +74,10 @@ export default {
                             index: 'sign',
                             title: '在线签到',
                         },
+                        {
+                            index: 'broadcast',
+                            title: '通知公告',
+                        },
                     ]
                 },
                 {
@@ -130,6 +134,10 @@ export default {
                         {
                             index: 'sign',
                             title: '在线签到',
+                        },
+                        {
+                            index: 'broadcast',
+                            title: '通知公告',
                         },
                     ]
                 },
@@ -214,6 +222,10 @@ export default {
                         {
                             index: 'sign',
                             title: '在线签到',
+                        },
+                        {
+                            index: 'broadcast',
+                            title: '通知公告',
                         },
                     ]
                 },

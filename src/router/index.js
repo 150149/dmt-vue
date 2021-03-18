@@ -30,6 +30,16 @@ export default new Router({
                     meta: { title: '故障详情' }
                 },
                 {
+                    path: '/repairdetail',
+                    component: () => import(/* webpackChunkName: "table" */ '../components/page/RepairDetail.vue'),
+                    meta: { title: '详细登记' }
+                },
+                {
+                    path: '/broadcast',
+                    component: () => import(/* webpackChunkName: "table" */ '../components/page/Broadcast.vue'),
+                    meta: { title: '通知公告' }
+                },
+                {
                     path: '/sign',
                     component: () => import(/* webpackChunkName: "table" */ '../components/page/Sign.vue'),
                     meta: { title: '在线签到' }

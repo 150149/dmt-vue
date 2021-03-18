@@ -3,18 +3,12 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>
-                    <i class="el-icon-lx-cascades"></i> 故障登记
+                    <i class="el-icon-lx-cascades"></i> 详细登记
                 </el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="handle-box">
-                <el-button
-                        type="primary"
-                        icon="el-icon-lx-tag"
-                        class="handle-add mr10"
-                        @click="open1"
-                >新增记录</el-button>
                 <el-select v-model="query.type" placeholder="故障种类" class="handle-select mr10">
                     <el-option key="%" label="所有类别" value="%"></el-option>
                     <el-option key="1" label="投影仪" value="1"></el-option>
@@ -46,10 +40,8 @@
                             value-format="yyyy-MM-dd"
                             class="handle-select mr10"
                     ></el-date-picker>
-                <el-input v-model="query.class1" placeholder="教室" class="handle-input mr10"></el-input>
+                <el-input v-model="query.class1" placeholder="教室或者登记内容" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
-                <el-button type="warning"  @click="handleWeek">周四检修</el-button>
-                <el-button type="success"  @click="handleDetail">详细登记</el-button>
                 <el-button  @click="handleDownload" >下载</el-button>
             </div>
             <el-table
@@ -68,6 +60,9 @@
                 <el-table-column prop="type" label="故障种类" align="center">
                 </el-table-column>
                 <el-table-column prop="name" align="center" label="登记人员"></el-table-column>
+                <el-table-column prop="name2" align="center" label="维修人员"></el-table-column>
+                <el-table-column prop="deal" align="center" label="处理结果"></el-table-column>
+                <el-table-column prop="remarks" align="center" label="备注"></el-table-column>
                 <el-table-column prop="state" label="状态" align="center">
                     <template slot-scope="scope">
                         <div slot="reference" class="name-wrapper">
@@ -167,7 +162,7 @@
     import XLSX from "xlsx";
     import FileSaver from "file-saver";
     export default {
-        name: 'basetable',
+        name: 'repairdetail',
         data() {
             return {
                 query: {
@@ -206,7 +201,7 @@
             "$route" : {
                 handler(to,from){
                     const that = this;
-                    if (to.path==="/repair") {
+                    if (to.path==="/repairdetail") {
                         that.getData();
                     }
                 },
@@ -260,7 +255,7 @@
             // 获取 easy-mock 的模拟数据
             getData() {
                 this.loading = true;
-                this.$axios.post('/Repair',{
+                this.$axios.post('/RepairDetail',{
                     type: this.query.type,
                     state: this.query.state,
                     date1: this.query.date1,
@@ -282,7 +277,7 @@
                         this.loading=false;
                         this.$router.push({path: '/login'});
                     } else if (res1.data.code===500) {
-                        alert("请截图以下信息报给维护员: 出错位置：repair.getdata 出错详情: " + res1.data.message);
+                        alert("请截图以下信息报给维护员: 出错位置：repairDetail.getdata 出错详情: " + res1.data.message);
                     }
                     this.loading=false;
                 }).catch(res2=>{
@@ -302,7 +297,7 @@
                 })
                     .then(() => {
                         this.loading = true;
-                        this.$axios.post('/RepairDelete',{
+                        this.$axios.post('/RepairInfoDelete',{
                             id: row.id
                         }).then(res6=>{
                             if (res6.data.code===200) {
@@ -316,7 +311,7 @@
                                 this.loading=false;
                                 this.$router.push({path: '/login'});
                             } else if (res6.data.code===500) {
-                                alert("请截图以下信息报给维护员: 出错位置：repair.handledelete 出错详情: " + res6.data.message);
+                                alert("请截图以下信息报给维护员: 出错位置：repairDetail.handledelete 出错详情: " + res6.data.message);
                             }
                             this.loading=false;
                         }).catch(res7=>{
@@ -329,7 +324,7 @@
             handleEdit(row) {
                 this.loading = true;
                 this.$axios.post('/RepairInfoQuery',{
-                    id: row.id
+                    id: row.repair
                 }).then(res1=>{
                     if (res1.data.code===200) {
                         this.loading = false;
@@ -347,7 +342,7 @@
                         this.loading=false;
                         this.$router.push({path: '/login'});
                     } else if (res1.data.code===500) {
-                        alert("请截图以下信息报给维护员: 出错位置：repair.handledit 出错详情: " + res1.data.message);
+                        alert("请截图以下信息报给维护员: 出错位置：repairDetail.handledit 出错详情: " + res1.data.message);
                     }
                     this.loading=false;
                 }).catch(res2=>{
@@ -358,54 +353,16 @@
 
                 //this.editVisible = true;
             },
-            // 保存编辑
-            saveEdit() {
-                this.editVisible = false;
-                this.loading=true;
-                this.$axios.post('/RepairAdd',{
-                    id: this.form.id,
-                    date: this.form.date,
-                    classtype: this.form.classtype,
-                    room: this.form.room,
-                    type: this.form.type,
-                    reason: this.form.reason,
-                    name: this.form.name,
-                    state: this.form.state
-                }).then(res4=>{
-                    if (res4.data.code===200) {
-                        this.getData();
-                        this.$message.success('成功');
-                    } else if (res4.data.code===400) {
-                        this.$message.error('失败:' + res4.data.message);
-                    } else if (res4.data.code===403) {
-                        this.$message.error('失败:' + res4.data.message);
-                        this.loading=false;
-                        this.$router.push({path: '/login'});
-                    } else if (res4.data.code===500) {
-                        alert("请截图以下信息报给维护员: 出错位置：repair.saveEdit 出错详情: " + res4.data.message);
-                    }
-                    this.loading=false;
-                }).catch(res5=>{
-                    this.$message.error(res5.message);
-                });
-            },
+
             // 分页导航
             handlePageChange(val) {
                 this.$set(this.query, 'pageindex', val);
                 this.getData();
             },
 
-            handleWeek(){
-                this.$router.push("/weeklyrepair");
-            },
-
-            handleDetail(){
-                this.$router.push("/repairdetail");
-            },
-
             handleDownload(){
                 this.loading = true;
-                this.$axios.post('/Repair',{
+                this.$axios.post('/RepairDetail',{
                     type: this.query.type,
                     state: this.query.state,
                     date1: this.query.date1,
@@ -479,6 +436,7 @@
                             if (that.query.class1!=="" && that.query.class1!==null) {
                                 defaultDate = defaultDate + "_" + that.query.class1;
                             }
+
                             try {
                                 FileSaver.saveAs(
                                     //Blob 对象表示一个不可变、原始数据的类文件对象。
@@ -505,7 +463,7 @@
                         this.loading=false;
                         this.$router.push({path: '/login'});
                     } else if (res1.data.code===500) {
-                        alert("请截图以下信息报给维护员: 出错位置：repair.getdata 出错详情: " + res1.data.message);
+                        alert("请截图以下信息报给维护员: 出错位置：repairDetail.getdata 出错详情: " + res1.data.message);
                     }
                     this.loading=false;
                 }).catch(res2=>{
@@ -534,7 +492,7 @@
     }
 
     .handle-input {
-        width: 120px;
+        width: 140px;
         display: inline-block;
     }
     .table {

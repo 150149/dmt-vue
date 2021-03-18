@@ -30,13 +30,7 @@
                     v-loading="loading"
                     id="out-table"
             >
-                <el-table-column
-                        :prop="id"
-                        :label="`行数`"
-                        align="center"
-                        width="5"
-                >
-                </el-table-column>
+
 
                 <el-table-column
                         v-for="(val,key) in this.tableData[0]"
@@ -72,7 +66,7 @@
 
                 <el-form-item
                         v-for="(val,key) in this.tableData[0]"
-
+                        v-if="key!=='id'"
                         :label="key"
                 >
                     <el-input v-model="tableData[form][key]"></el-input>
@@ -103,14 +97,15 @@
                 otableData: [],
                 schfilter: '',
                 loading: true,
-                id: '',
-                form: '1',
+                id: '1',
+                form: '0',
                 editVisible: 'false',
                 fit: true,
                 showSelect: false,
                 selectData: '',
             }
         },
+
         created(){
             this.getData();
         },
@@ -118,6 +113,7 @@
         computed:{
             tableData:function(){
                 var search=this.schfilter.toString().toLowerCase();
+
                 if(search){
                     return  this.otableData.filter(function(dataNews){
                         return Object.keys(dataNews).some(function(key){
@@ -130,7 +126,6 @@
         },
 
         methods: {
-
 
             getData(){
                 this.editVisible=false;

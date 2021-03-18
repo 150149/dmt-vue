@@ -134,6 +134,7 @@ export default {
                     },
                 ]
             },
+            notifyPromise:Promise.resolve(),
         };
     },
     components: {
@@ -224,7 +225,31 @@ export default {
                 this.loading=false;
             }).catch(res2=>{
                 this.$message.error(res2.message);
-            })
+            });
+
+            this.$axios.get("/BroadcastShow").then(res1=>{
+
+                if (res1.data.code===200){
+
+                    for (let i=0; i<res1.data.data.length; i++) {
+                        this.notify(res1.data.data[i].info);
+                    }
+
+                } else if (res1.data.code===400) {
+                    this.$message.error('查询失败:' + res1.data.message);
+                } else if (res1.data.code===403) {
+                    this.$message.error('查询失败:' + res1.data.message);
+                    this.loading=false;
+                    this.$router.push({path: '/login'});
+                } else if (res1.data.code===500) {
+                    alert("请截图以下信息报给维护员: 出错位置：dashboard.BroadcastShow 出错详情: " + res1.data.message);
+                }
+                this.loading=false;
+            }).catch(res2=>{
+                this.$message.error(res2.message);
+            });
+
+
         },
         changeDate() {
             const now = new Date().getTime();
@@ -232,7 +257,18 @@ export default {
                 const date = new Date(now - (6 - index) * 86400000);
                 item.name = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
             });
-        }
+        },
+
+        notify(info) {
+            this.notifyPromise = this.notifyPromise.then(this.$nextTick).then(()=>{
+                this.$notify({
+                    title: "通知",
+                    message: info,
+                    duration: 0,
+                    type: 'warning',
+                });
+            })
+        },
         // handleListener() {
         //     bus.$on('collapse', this.handleBus);
         //     // 调用renderChart方法对图表进行重新渲染
