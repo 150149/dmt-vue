@@ -107,7 +107,14 @@
         </div>
 
         <!-- 编辑弹出框 -->
-        <el-dialog title="添加用户" :visible.sync="editVisible" width="30%">
+        <el-dialog
+                title="添加用户"
+                :visible.sync="editVisible"
+                width="30%"
+                close-on-click-modal="false"
+                close-on-press-escape="false"
+                show-close="false"
+        >
             <el-form ref="form" :model="form" label-width="70px">
                 <el-divider></el-divider>
 

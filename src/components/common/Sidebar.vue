@@ -93,6 +93,10 @@ export default {
                             index: 'document',
                             title: '文档资料',
                         },
+                        {
+                            index: 'file',
+                            title: '文件资料',
+                        },
                     ]
                 },
                 {
@@ -153,6 +157,10 @@ export default {
                         {
                             index: 'document',
                             title: '文档资料',
+                        },
+                        {
+                            index: 'file',
+                            title: '文件资料',
                         },
                     ]
                 },
@@ -241,6 +249,10 @@ export default {
                         {
                             index: 'document',
                             title: '文档资料',
+                        },
+                        {
+                            index: 'file',
+                            title: '文件资料',
                         },
                     ]
                 },

@@ -93,7 +93,14 @@
 
 
 
-        <el-dialog title="编辑" :visible.sync="editVisible2" width="30%">
+        <el-dialog
+                title="编辑"
+                :visible.sync="editVisible2"
+                width="30%"
+                close-on-click-modal="false"
+                close-on-press-escape="false"
+                show-close="false"
+        >
             <el-form ref="form" :model="form" label-width="70px">
                 <el-divider></el-divider>
                 <el-form-item label="登记日期" >
@@ -151,7 +158,14 @@
 
 
 
-        <el-dialog title="新增维修信息" :visible.sync="editVisible3" width="30%">
+        <el-dialog
+                title="新增维修信息"
+                :visible.sync="editVisible3"
+                width="30%"
+                close-on-click-modal="false"
+                close-on-press-escape="false"
+                show-close="false"
+        >
             <el-form ref="form" :model="form2" label-width="70px">
                 <el-divider></el-divider>
                 <el-form-item label="处理日期" >

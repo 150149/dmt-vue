@@ -60,6 +60,11 @@ export default new Router({
                     meta: { title: '文档资料' }
                 },
                 {
+                    path: '/file',
+                    component: () => import(/* webpackChunkName: "form" */ '../components/page/File.vue'),
+                    meta: { title: '文件资料' }
+                },
+                {
                     path: '/documentinfo',
                     component: () => import(/* webpackChunkName: "form" */ '../components/page/DocumentInfo.vue'),
                     meta: { title: '文档详情' }

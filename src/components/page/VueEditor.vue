@@ -105,9 +105,6 @@
             },
 
             onChangeQuill(response, file, fileList) {
-
-                        console.log(response.data);
-
                         let quill = this.$refs.myTextEditor.quill;
                         let length = quill.getSelection().index;
                         // 图片上传到对象存储后的具体地址
