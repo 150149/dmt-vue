@@ -27,6 +27,7 @@
             >
                 <el-table-column width="200"  align="center"></el-table-column>
                 <el-table-column width="450" prop="title" label="名称"  align="left"></el-table-column>
+                <el-table-column prop="date" width="200" label="修改时间"  align="left"></el-table-column>
 
 
                 <el-table-column label="操作" width="600" align="center">

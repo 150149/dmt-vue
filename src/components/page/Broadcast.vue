@@ -27,7 +27,8 @@
                     id="out-table"
             >
                 <el-table-column  width="55" align="center"></el-table-column>
-                <el-table-column prop="sender" label="发送人"  align="center"></el-table-column>
+                <el-table-column prop="date" width="200" label="发布时间"  align="center"></el-table-column>
+                <el-table-column prop="sender" label="发送人"  width="200" align="center"></el-table-column>
                 <el-table-column prop="info" align="center" label="公告内容"></el-table-column>
 
                 <el-table-column label="操作" width="180" align="center" v-if="usertype==='主管' || usertype==='主管老师'">
