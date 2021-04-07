@@ -1,6 +1,10 @@
 <template>
     <div>
         <el-row :gutter="20" v-loading="loading">
+            <el-card shadow="hover" class="broadcast">
+                公告: {{topB}}
+            </el-card>
+
             <el-col :span="8" :lg="8" :xs="24" :sm="24">
                 <el-card shadow="hover" class="mgb20" style="height:252px;">
                     <div class="user-info">
@@ -92,6 +96,7 @@ export default {
             loading: false,
             cpu: 0,
             disk:0,
+            topB: '暂无公告',
             options: {
                 type: 'line',
                 title: {
@@ -227,6 +232,29 @@ export default {
                 this.$message.error(res2.message);
             });
 
+            this.$axios.post('/Broadcast', {
+                pageindex: 1,
+                pagesize: 1
+            }).then(res1 => {
+                if (res1.data.code === 200) {
+                    this.topB = res1.data.data[0].info;
+                    //this.$message.success('查询成功');
+                    this.loading = false;
+                } else if (res1.data.code === 400) {
+                    this.$message.error('查询失败:' + res1.data.message);
+                } else if (res1.data.code === 403) {
+                    this.$message.error('查询失败:' + res1.data.message);
+                    this.loading = false;
+                    this.$router.push({path: '/login'});
+                } else if (res1.data.code === 500) {
+                    alert("请截图以下信息报给维护员: 出错位置：dashboard.getdata.broadcast 出错详情: " + res1.data.message);
+                }
+                this.loading = false;
+            }).catch(res2 => {
+                this.$message.error(res2.message);
+            });
+
+
             this.$axios.get("/BroadcastShow").then(res1=>{
 
                 if (res1.data.code===200){
@@ -242,7 +270,7 @@ export default {
                     this.loading=false;
                     this.$router.push({path: '/login'});
                 } else if (res1.data.code===500) {
-                    alert("请截图以下信息报给维护员: 出错位置：dashboard.BroadcastShow 出错详情: " + res1.data.message);
+                    alert("请截图以下信息报给维护员: 出错位置：dashboard.getdata.BroadcastShow 出错详情: " + res1.data.message);
                 }
                 this.loading=false;
             }).catch(res2=>{
@@ -289,6 +317,18 @@ export default {
 
 
 <style scoped>
+
+    .broadcast {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 20px;
+        font-size: 15px;
+        font-weight: bold;
+        height:30px;
+        display: flex;
+        align-items: center;
+    }
+
 .el-row {
     margin-bottom: 10px;
 }
