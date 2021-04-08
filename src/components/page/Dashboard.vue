@@ -221,7 +221,7 @@ export default {
                 } else if (res1.data.code===400) {
                     this.$message.error('查询失败:' + res1.data.message);
                 } else if (res1.data.code===403) {
-                    this.$message.error('查询失败:' + res1.data.message);
+                    //this.$message.error('查询失败:' + res1.data.message);
                     this.loading=false;
                     this.$router.push({path: '/login'});
                 } else if (res1.data.code===500) {
@@ -243,7 +243,7 @@ export default {
                 } else if (res1.data.code === 400) {
                     this.$message.error('查询失败:' + res1.data.message);
                 } else if (res1.data.code === 403) {
-                    this.$message.error('查询失败:' + res1.data.message);
+                    //this.$message.error('查询失败:' + res1.data.message);
                     this.loading = false;
                     this.$router.push({path: '/login'});
                 } else if (res1.data.code === 500) {
@@ -266,7 +266,7 @@ export default {
                 } else if (res1.data.code===400) {
                     this.$message.error('查询失败:' + res1.data.message);
                 } else if (res1.data.code===403) {
-                    this.$message.error('查询失败:' + res1.data.message);
+                    //this.$message.error('查询失败:' + res1.data.message);
                     this.loading=false;
                     this.$router.push({path: '/login'});
                 } else if (res1.data.code===500) {
@@ -322,8 +322,7 @@ export default {
         margin-left: 10px;
         margin-right: 10px;
         margin-bottom: 20px;
-        font-size: 15px;
-        font-weight: bold;
+        font-size: 13px;
         height:30px;
         display: flex;
         align-items: center;

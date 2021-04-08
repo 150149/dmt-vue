@@ -3,7 +3,7 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>
-                    <i class="el-icon-lx-calendar"></i> 故障详情
+                    <i class="el-icon-lx-calendar"></i> 故障登记
                 </el-breadcrumb-item>
                 <el-breadcrumb-item>故障详情</el-breadcrumb-item>
             </el-breadcrumb>
