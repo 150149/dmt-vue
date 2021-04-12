@@ -47,10 +47,10 @@
                             class="handle-select mr10"
                     ></el-date-picker>
                 <el-input v-model="query.class1" placeholder="教室" class="handle-input mr10"></el-input>
-                <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
-                <el-button type="warning"  @click="handleWeek">周四检修</el-button>
-                <el-button type="success"  @click="handleDetail">详细登记</el-button>
-                <el-button  @click="handleDownload" >下载</el-button>
+                <el-button  type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+                <el-button  type="warning"  @click="handleWeek">周四检修</el-button>
+                <el-button  type="success"  @click="handleDetail">详细登记</el-button>
+                <el-button  class="handle-select" @click="handleDownload" >下载</el-button>
             </div>
             <el-table
                     :data="tableData"
@@ -536,6 +536,7 @@
 
     .handle-select {
         width: 143px;
+        margin-bottom: 10px;
     }
 
     .handle-add {
@@ -552,15 +553,17 @@
     }
 
     @media screen and (max-width: 500px){
+
         .table {
             width: 500px !important;
-            font-size: 7px !important;
+            font-size: 3px !important;
         }
         .container {
             width: 500px !important;
         }
         .el-table-column {
             width: 10px !important;
+            font-size: 3px !important;
         }
     }
 

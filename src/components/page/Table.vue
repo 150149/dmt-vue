@@ -25,7 +25,7 @@
                     style="width: 100%"
                     v-loading="loading"
             >
-                <el-table-column width="200"  align="center"></el-table-column>
+                <el-table-column width="55"  align="center"></el-table-column>
                 <el-table-column width="450" prop="title" label="名称"  align="left"></el-table-column>
                 <el-table-column prop="date" width="200" label="修改时间"  align="left"></el-table-column>
 
