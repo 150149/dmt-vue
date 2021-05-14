@@ -110,6 +110,8 @@
                 fit: true,
                 showSelect: false,
                 selectData: '',
+                title: '',
+                changeDate: '',
             }
         },
 
@@ -147,6 +149,9 @@
                         } else {
                             this.showSelect=false;
                         }
+                        this.title = res1.data.data.title;
+                        this.changeDate = res1.data.data.date;
+
                         var array=JSON.parse(decodeURIComponent(res1.data.data.table));
 
                         var data=[];
@@ -309,6 +314,16 @@
             },
 
             handleDownload(){
+                var now = new Date();
+                var year = now.getFullYear(); //得到年份
+                var month = now.getMonth(); //得到月份
+                var date = now.getDate(); //得到日期
+                var hour = now.getHours();
+                month = month + 1;
+                month = month.toString().padStart(2, "0");
+                date = date.toString().padStart(2, "0");
+                var defaultDate = `${year}-${month}-${date}`;
+
                 var wb = XLSX.utils.table_to_book(document.querySelector("#out-table"));
                 var wbout = XLSX.write(wb, {
                     bookType: "xlsx",
@@ -323,7 +338,7 @@
                         //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
                         new Blob([wbout], { type: "application/octet-stream" }),
                         //设置导出文件名称
-                        "导出的表格.xlsx"
+                        this.title + "_" + defaultDate + "_导出的表格.xlsx"
                     );
                 } catch (e) {
                     if (typeof console !== "undefined") console.log(e, wbout);
