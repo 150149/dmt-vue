@@ -43,6 +43,7 @@
                 ></el-date-picker>
                 <el-input v-model="query.name" placeholder="签到人员" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+                <el-button type="success" icon="el-icon-search" @click="handleNoSign" v-if="usertype==='主管' || usertype==='主管老师'">签到人数查询</el-button>
             </div>
             <el-table
                     :data="tableData"
@@ -109,11 +110,12 @@
             <el-form ref="form" :model="form" label-width="70px">
                 <el-divider></el-divider>
                 <el-form-item label="上班时间" >
-                    <el-time-picker
+                    <el-date-picker
                             v-model="form.start"
-                            value-format="HH:mm:ss"
+                            type="datetime"
+                            value-format="yyyy-MM-dd HH:mm:ss"
                             placeholder="选择上班时间">
-                    </el-time-picker>
+                    </el-date-picker>
                 </el-form-item>
                 <el-form-item label="类型" >
                     <el-select v-model="form.type" placeholder="签到类型" >
@@ -154,11 +156,12 @@
             <el-form ref="form" :model="form" label-width="70px">
                 <el-divider></el-divider>
                 <el-form-item label="上班时间" >
-                    <el-time-picker
+                    <el-date-picker
                             v-model="form.start"
-                            value-format="HH:mm:ss"
+                            type="datetime"
+                            value-format="yyyy-MM-dd HH:mm:ss"
                             placeholder="选择上班时间">
-                    </el-time-picker>
+                    </el-date-picker>
                 </el-form-item>
                 <el-form-item label="类型" >
                     <el-select v-model="form.type" placeholder="签到类型" >
@@ -256,6 +259,22 @@
 
         methods: {
             getData() {
+                if (this.$route.query.date!=null) {
+                    this.query.date1=this.$route.query.date;
+
+                    var strDate = this.$route.query.date;
+                    var date = eval('new Date(' + strDate.replace(/\d+(?=-[^-]+$)/, function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');
+                    date=date.setDate(date.getDate()+1);
+
+                    var Dates = new Date(date);
+                    var Y = Dates.getFullYear();
+                    var M = Dates.getMonth() + 1;
+                    var D = Dates.getDate();
+                    this.query.date2=Y + (M < 10 ? "-0" : "-") + M + (D < 10 ? "-0" : "-") + D;
+
+                    this.$route.query.date=null;
+                }
+
                 this.loading = true;
                 this.$axios.post('/Sign',{
                     type: this.query.type,
@@ -295,6 +314,10 @@
                 this.getData();
             },
 
+            handleNoSign() {
+                this.$router.push("/nosign");
+            },
+
             getNowTime() {
                 var now = new Date();
                 var year = now.getFullYear(); //得到年份
@@ -308,19 +331,19 @@
                 //this.$set(this.form, "start", defaultDate);
 
                 if (hour>=0 && hour <= 9 ){
-                    this.$set(this.form, "start", "08:10:00");
+                    this.$set(this.form, "start",defaultDate + " " + "08:10:00");
                     this.$set(this.form, "length", "2");
                 }
                 if (hour>9 && hour <= 12 ){
-                    this.$set(this.form, "start", "10:10:00");
+                    this.$set(this.form, "start",defaultDate + " " + "10:10:00");
                     this.$set(this.form, "length", "2");
                 }
                 if (hour>12 && hour <= 17 ){
-                    this.$set(this.form, "start", "14:10:00");
+                    this.$set(this.form, "start",defaultDate + " " + "14:10:00");
                     this.$set(this.form, "length", "3");
                 }
                 if (hour>17 && hour < 24 ){
-                    this.$set(this.form, "start", "19:10:00");
+                    this.$set(this.form, "start",defaultDate + " " + "19:10:00");
                     this.$set(this.form, "length", "2");
                 }
 
@@ -356,21 +379,11 @@
 
             // 保存编辑
             saveEdit() {
-                var now = new Date();
-                var year = now.getFullYear(); //得到年份
-                var month = now.getMonth(); //得到月份
-                var date = now.getDate(); //得到日期
-
-                month = month + 1;
-                month = month.toString().padStart(2, "0");
-                date = date.toString().padStart(2, "0");
-                var defaultDate = `${year}-${month}-${date}`;
-
 
                 this.editVisible3 = false;
                 this.loading=true;
                 this.$axios.post('/SignAdd',{
-                    start: defaultDate + " " + this.form.start,
+                    start: this.form.start,
                     length: this.form.length,
                     name: this.form.name,
                     type: this.form.type,
@@ -396,17 +409,6 @@
             },
 
             saveEdit2() {
-                var now = new Date();
-                var year = now.getFullYear(); //得到年份
-                var month = now.getMonth(); //得到月份
-                var date = now.getDate(); //得到日期
-
-                month = month + 1;
-                month = month.toString().padStart(2, "0");
-                date = date.toString().padStart(2, "0");
-                var defaultDate = `${year}-${month}-${date}`;
-
-
                 this.editVisible4 = false;
                 this.loading=true;
                 this.$axios.post('/SignUpdate',{

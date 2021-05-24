@@ -1,0 +1,13 @@
+<template>
+    $END$
+</template>
+
+<script>
+    export default {
+        name: "NoSignQuery"
+    }
+</script>
+
+<style scoped>
+
+</style>

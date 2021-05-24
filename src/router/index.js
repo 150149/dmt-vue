@@ -80,6 +80,11 @@ export default new Router({
                     meta: { title: '签到统计' ,permission: true}
                 },
                 {
+                    path: '/nosign',
+                    component: () => import(/* webpackChunkName: "form" */ '../components/page/NoSign.vue'),
+                    meta: { title: '签到人数查询' ,permission: true}
+                },
+                {
                     path: '/salary',
                     component: () => import(/* webpackChunkName: "form" */ '../components/page/Salary.vue'),
                     meta: { title: '工资结算' ,permission: true}
