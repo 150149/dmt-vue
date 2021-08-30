@@ -97,6 +97,10 @@ export default {
                             index: 'file',
                             title: '文件资料',
                         },
+                        {
+                            index: 'classtable',
+                            title: '课表资料',
+                        },
                     ]
                 },
                 {
@@ -161,6 +165,10 @@ export default {
                         {
                             index: 'file',
                             title: '文件资料',
+                        },
+                        {
+                            index: 'classtable',
+                            title: '课表资料',
                         },
                     ]
                 },
@@ -253,6 +261,10 @@ export default {
                         {
                             index: 'file',
                             title: '文件资料',
+                        },
+                        {
+                            index: 'classtable',
+                            title: '课表资料',
                         },
                     ]
                 },

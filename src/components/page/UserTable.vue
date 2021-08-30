@@ -15,9 +15,21 @@
                         class="handle-add mr10"
                         @click="open1"
                 >新增用户</el-button>
+                <el-select  v-model="schfilter" placeholder="在职状况" class="handle-select mr10" >
+                    <el-option key="" label="所有状况" value=""></el-option>
+                    <el-option key="可用" label="在职" value="可用"></el-option>
+                    <el-option key="禁用" label="离职" value="禁用"></el-option>
+                </el-select>
+                <el-select  v-model="schfilter2" placeholder="职称" class="handle-select mr10" >
+                    <el-option key="" label="所有职称" value=""></el-option>
+                    <el-option key="主管老师" label="主管老师" value="主管老师"></el-option>
+                    <el-option key="主管" label="主管" value="主管"></el-option>
+                    <el-option key="组长" label="组长" value="组长"></el-option>
+                    <el-option key="协管员" label="协管员" value="协管员"></el-option>
+                </el-select>
             </div>
             <el-table
-                    :data="tableData"
+                    :data="tableData3"
                     class="table"
                     header-cell-class-name="table-header"
                     style="width: 100%"
@@ -111,9 +123,9 @@
                 title="添加用户"
                 :visible.sync="editVisible"
                 width="30%"
-                close-on-click-modal="false"
-                close-on-press-escape="false"
-                show-close="false"
+                :close-on-click-modal=false
+                :close-on-press-escape=false
+                :show-close=false
         >
             <el-form ref="form" :model="form" label-width="70px">
                 <el-divider></el-divider>
@@ -141,6 +153,8 @@
                 tableData: [],
                 editVisible: false,
                 pagetotal: 0,
+                schfilter: '',
+                schfilter2: '',
                 form: {
                     username: '',
                     able: '',
@@ -171,6 +185,38 @@
 
         created(){
             this.getData();
+        },
+
+        computed:{
+            tableData2:function(){
+                var search=this.schfilter.toString().toLowerCase();
+
+                if(search && search!==""){
+                    return  this.tableData.filter(function(dataNews){
+                        return Object.keys(dataNews).some(function(key){
+                            return String(dataNews[key]).toLowerCase().includes(search);
+                        })
+                    })
+                }
+                return this.tableData;
+            },
+
+            tableData3:function(){
+                var search=this.schfilter2.toString().toLowerCase();
+
+                if(search && search!==""){
+                    return  this.tableData2.filter(function(dataNews){
+                        return Object.keys(dataNews).some(function(key){
+                            if (search.includes("主管") && !search.includes("主管老师")) {
+                                return String(dataNews[key]).toLowerCase().includes(search) && !String(dataNews[key]).toLowerCase().includes("主管老师");
+                            } else {
+                                return String(dataNews[key]).toLowerCase().includes(search);
+                            }
+                        })
+                    })
+                }
+                return this.tableData2;
+            }
         },
 
         methods: {

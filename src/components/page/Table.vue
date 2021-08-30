@@ -26,11 +26,11 @@
                     v-loading="loading"
             >
                 <el-table-column width="55"  align="center"></el-table-column>
-                <el-table-column width="450" prop="title" label="名称"  align="left"></el-table-column>
-                <el-table-column prop="date" width="200" label="修改时间"  align="left"></el-table-column>
+                <el-table-column prop="title" label="名称" align="left"></el-table-column>
+                <el-table-column prop="date" label="修改时间" width="250" align="left"></el-table-column>
 
 
-                <el-table-column label="操作" width="600" align="center">
+                <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
                         <el-button
                                 type="text"
@@ -65,9 +65,9 @@
                 title="编辑"
                 :visible.sync="editVisible"
                 width="30%"
-                close-on-click-modal="false"
-                close-on-press-escape="false"
-                show-close="false"
+                :close-on-click-modal=false
+                :close-on-press-escape=false
+                :show-close=false
         >
             <el-form ref="form" :model="form" label-width="70px">
                 <el-divider></el-divider>
@@ -260,38 +260,55 @@
     }
 </script>
 
-                <style scoped>
-                    .handle-box {
-                        margin-bottom: 20px;
-                    }
+<style scoped>
+    .handle-box {
+        margin-bottom: 20px;
+    }
 
-                    .handle-select {
-                        width: 143px;
-                    }
+    .handle-select {
+        width: 143px;
+        margin-bottom: 10px;
+    }
 
-                    .handle-add {
-                        width: 100px;
-                    }
+    .handle-add {
+        width: 100px;
+    }
 
-                    .handle-input {
-                        width: 120px;
-                        display: inline-block;
-                    }
-                    .table {
-                        width: 100%;
-                        font-size: 14px;
-                    }
-                    .red {
-                        color: #ff0000;
-                    }
-                    .mr10 {
-                        margin-right: 10px;
-                    }
-                    .table-td-thumb {
-                        display: block;
-                        margin: auto;
-                        width: 40px;
-                        height: 7px;
-                    }
+    .handle-input {
+        width: 120px;
+        display: inline-block;
+    }
+    .table {
+        width: 100%;
+        font-size: 14px;
+    }
 
-                </style>
+    @media screen and (max-width: 500px){
+
+        .table {
+            width: 500px !important;
+            font-size: 3px !important;
+        }
+        .container {
+            width: 500px !important;
+        }
+        .el-table-column {
+            width: 10px !important;
+            font-size: 3px !important;
+        }
+    }
+
+    .red {
+        color: #ff0000;
+    }
+    .mr10 {
+        margin-right: 10px;
+    }
+    .table-td-thumb {
+        display: block;
+        margin: auto;
+        width: 40px;
+        height: 7px;
+    }
+
+</style>

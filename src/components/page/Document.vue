@@ -1,3 +1,4 @@
+
 <template>
     <div>
         <div class="crumbs">
@@ -17,7 +18,6 @@
                         v-if="usertype==='主管' || usertype==='主管老师'"
                 >新建文档</el-button>
             </div>
-
             <el-table
                     :data="tableData"
                     class="table"
@@ -25,11 +25,12 @@
                     style="width: 100%"
                     v-loading="loading"
             >
-                <el-table-column width="200"  align="center"></el-table-column>
-                <el-table-column width="450" prop="title" label="名称"  align="left"></el-table-column>
+                <el-table-column width="55"  align="center"></el-table-column>
+                <el-table-column prop="title" label="名称"  align="left"></el-table-column>
+                <el-table-column prop="date" label="修改日期" width="250" align="left"></el-table-column>
 
 
-                <el-table-column label="操作" width="600" align="center">
+                <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
                         <el-button
                                 type="text"
@@ -65,17 +66,17 @@
 
                 </el-table-column>
             </el-table>
-        </div>
 
+        </div>
 
         <!-- 编辑弹出框 -->
         <el-dialog
                 title="编辑"
                 :visible.sync="editVisible"
                 width="30%"
-                close-on-click-modal="false"
-                close-on-press-escape="false"
-                show-close="false"
+                :close-on-click-modal=false
+                :close-on-press-escape=false
+                :show-close=false
         >
             <el-form ref="form" :model="form" label-width="70px">
                 <el-divider></el-divider>
@@ -88,12 +89,7 @@
                 <el-button type="primary" @click="handleRename2">确 定</el-button>
             </span>
         </el-dialog>
-
     </div>
-
-
-
-
 </template>
 
 <script>
@@ -276,7 +272,6 @@
     .table-td-thumb {
         display: block;
         margin: auto;
-        width: 40px;
         height: 7px;
     }
 

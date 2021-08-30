@@ -60,7 +60,13 @@
         </div>
 
         <!-- 编辑弹出框 -->
-        <el-dialog title="上传文件" :visible.sync="editVisible3" width="30%">
+        <el-dialog title="上传文件"
+                   :visible.sync="editVisible3"
+                   width="30%"
+                   :close-on-click-modal=false
+                   :close-on-press-escape=false
+                   :show-close=false
+        >
             <el-divider></el-divider>
             <el-upload
                     class="upload-demo"
@@ -69,9 +75,6 @@
                     :auto-upload="true"
                     :on-success="onChangeQuill"
                     :on-error="onError"
-                    close-on-click-modal="false"
-                    close-on-press-escape="false"
-                    show-close="false"
                     :limit="20"
                     action="http://dmt.dgut.edu.cn/api/FileAdd"
                     multiple

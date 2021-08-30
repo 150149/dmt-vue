@@ -13,7 +13,7 @@
 
                 <el-input v-model="schfilter" placeholder="搜索" class="handle-input mr10"></el-input>
                 <el-button type="primary" class="handle-select">搜索</el-button>
-                <el-select  v-model="selectData" placeholder="在职状况" class="handle-select mr10" @change="selectTrigger(selectData)" v-if="showSelect===true">
+                <el-select  v-model="selectData" placeholder="状态" class="handle-select mr10" @change="selectTrigger(selectData)" v-if="showSelect===true">
                     <el-option key="%" label="所有类别" value="%"></el-option>
                     <el-option key="1" label="在职" value="1"></el-option>
                     <el-option key="2" label="离职" value="2"></el-option>
@@ -64,9 +64,9 @@
                 title="编辑"
                 :visible.sync="editVisible"
                 width="30%"
-                close-on-click-modal="false"
-                close-on-press-escape="false"
-                show-close="false"
+                :close-on-click-modal=false
+                :close-on-press-escape=false
+                :show-close=false
         >
             <el-form ref="tableData" :model="tableData" label-width="70px">
                 <el-divider></el-divider>

@@ -85,6 +85,11 @@ export default new Router({
                     meta: { title: '签到人数查询' ,permission: true}
                 },
                 {
+                    path: '/classtable',
+                    component: () => import(/* webpackChunkName: "form" */ '../components/page/ClassTable.vue'),
+                    meta: { title: '课表查询' }
+                },
+                {
                     path: '/salary',
                     component: () => import(/* webpackChunkName: "form" */ '../components/page/Salary.vue'),
                     meta: { title: '工资结算' ,permission: true}
