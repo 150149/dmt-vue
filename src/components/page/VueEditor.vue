@@ -22,6 +22,8 @@
                 :on-error="onError"
                 :limit="20"
                 :multiple="true"
+                v-show=false
+                style="height: 1px ;width: 1px"
                 :accept="acceptFile">
         </el-upload>
 
@@ -32,7 +34,11 @@
     import 'quill/dist/quill.core.css';
     import 'quill/dist/quill.snow.css';
     import 'quill/dist/quill.bubble.css';
-    import { quillEditor } from 'vue-quill-editor';
+    import { quillEditor, Quill } from 'vue-quill-editor';
+    import { ImageDrop } from 'quill-image-drop-module'
+    import ImageResize from 'quill-image-resize-module'
+    Quill.register('modules/imageDrop', ImageDrop);
+    Quill.register('modules/imageResize', ImageResize);
     export default {
         name: 'editor',
         data: function(){
@@ -40,6 +46,15 @@
                 content: '',
                 editorOption: {
                     modules: {
+                        imageDrop: true, //图片拖拽
+                        imageResize: {
+                            displaySize: true,
+                            displayStyles: {
+                                backgroundColor: "black",
+                                border: "none",
+                                color: "white"
+                            },
+                        },
                         toolbar: {
                             container: [
                                 ['bold', 'italic', 'underline', 'strike'],

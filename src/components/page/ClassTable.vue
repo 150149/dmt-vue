@@ -39,19 +39,40 @@
             </el-table>
         </div>
 
-        <el-upload
-                ref="quillUploader"
-                class="avatar-uploader"
-                :action="photoUrl"
-                :show-file-list="false"
-                :auto-upload="true"
-                :on-success="onChangeQuill"
-                :on-error="onError"
-                :limit="20"
-                :multiple="true"
-                v-if="usertype==='主管' || usertype==='主管老师'"
-                v-show="false">
-        </el-upload>
+
+
+        <!-- 编辑弹出框 -->
+        <el-dialog title="上传课表"
+                   :visible.sync="editVisible3"
+                   width="30%"
+                   :close-on-click-modal=false
+                   :close-on-press-escape=false
+                   :show-close=false
+        >
+            <el-divider></el-divider>
+            <el-upload
+                    ref="quillUploader"
+                    class="upload-demo"
+                    drag
+                    width="100%"
+                    action="http://dmt.dgut.edu.cn/api/ClassTableUpload"
+                    :auto-upload="true"
+                    :on-success="onChangeQuill"
+                    :on-error="onError"
+                    :limit="1"
+                    :multiple="false"
+                    align="center"
+            >
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                <div class="el-upload__tip" slot="tip">只能上传大小为150M以内的文件</div>
+            </el-upload>
+
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="editVisible3 = false">取消上传</el-button>
+            </span>
+
+        </el-dialog>
 
 
     </div>
@@ -66,7 +87,7 @@
                 tableData: [],
                 loading: true,
                 usertype: '',
-                photoUrl :'http://dmt.dgut.edu.cn/api/ClassTableUpload', // 上传图片地址
+                editVisible3: false,
                 query:{
                   room: '6F101',
                   teacher: '',
@@ -129,33 +150,19 @@
             },
 
             open1(){
-                document.querySelector(".avatar-uploader input").click();
+                this.editVisible3=true;
             },
 
             onError(err, file, fileList){
-                alert("上传错误" + err);
+                this.$message.success('上传成功,稍后可查看最新的结果');
+                this.editVisible3=false;
+                this.getData();
             },
 
             onChangeQuill(response, file, fileList) {
-
-                console.log(response.data);
-
-                let quill = this.$refs.myTextEditor.quill;
-                let length = quill.getSelection().index;
-                // 图片上传到对象存储后的具体地址
-                let imgSrc =  response.data;
-                if (response.data.code===200){
-                    this.$message.success('上传成功');
-                    this.getData();
-                } else if (response.data.code===400) {
-                    this.$message.error('上传失败,' + response.data.message);
-                    this.getData();
-                } else if (response.data.code===500) {
-                    alert("请截图以下信息报给维护员: 出错位置：classTable.upload 出错详情: " + response.data.message);
-                } else if (response.data.code===403) {
-                    this.$message.error("登录过期，请重新登录");
-                }
-
+                this.$message.success('上传成功,稍后可查看最新的结果');
+                this.editVisible3=false;
+                this.getData();
             },
 
         },

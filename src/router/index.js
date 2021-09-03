@@ -65,6 +65,11 @@ export default new Router({
                     meta: { title: '文件资料' }
                 },
                 {
+                    path: '/classmachine',
+                    component: () => import(/* webpackChunkName: "tabs" */ '../components/page/ClassMachine.vue'),
+                    meta: { title: '设备资料' }
+                },
+                {
                     path: '/documentinfo',
                     component: () => import(/* webpackChunkName: "form" */ '../components/page/DocumentInfo.vue'),
                     meta: { title: '文档详情' }
@@ -128,6 +133,11 @@ export default new Router({
                     path: '/worksort',
                     component: () => import(/* webpackChunkName: "form" */ '../components/page/WorkSort.vue'),
                     meta: { title: '排班管理' ,permission: true}
+                },
+                {
+                    path: '/systemconfig',
+                    component: () => import(/* webpackChunkName: "form" */ '../components/page/SystemCnfig.vue'),
+                    meta: { title: '系统配置' ,permission: true}
                 },
                 {
                     path: '/money',

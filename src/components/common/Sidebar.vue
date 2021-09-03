@@ -98,6 +98,10 @@ export default {
                             title: '文件资料',
                         },
                         {
+                            index: 'classmachine',
+                            title: '设备资料',
+                        },
+                        {
                             index: 'classtable',
                             title: '课表资料',
                         },
@@ -167,6 +171,10 @@ export default {
                             title: '文件资料',
                         },
                         {
+                            index: 'classmachine',
+                            title: '设备资料',
+                        },
+                        {
                             index: 'classtable',
                             title: '课表资料',
                         },
@@ -215,6 +223,10 @@ export default {
                         {
                             index: 'money',
                             title: '账单管理'
+                        },
+                        {
+                            index: 'systemconfig',
+                            title: '系统配置'
                         }
                     ]
                 },
@@ -261,6 +273,10 @@ export default {
                         {
                             index: 'file',
                             title: '文件资料',
+                        },
+                        {
+                            index: 'classmachine',
+                            title: '设备资料',
                         },
                         {
                             index: 'classtable',

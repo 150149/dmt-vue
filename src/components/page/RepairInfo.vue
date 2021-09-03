@@ -36,6 +36,46 @@
                 </el-table>
             </el-card>
 
+        <el-card shadow="hover" style="margin-bottom: 20px;">
+            <el-table
+                    :data="tableData3"
+                    class="table"
+                    header-cell-class-name="table-header"
+                    style="width: 100%"
+                    v-loading="loading"
+            >
+                <el-table-column  width="55" align="center" prop="id" label="编号" ></el-table-column>
+                <el-table-column prop="room" label="教室"  align="center"></el-table-column>
+                <el-table-column prop="projector" align="center" label="投影仪"></el-table-column>
+                <el-table-column prop="curtain" align="center" label="幕布"></el-table-column>
+                <el-table-column prop="amplifier" label="功放" align="center"></el-table-column>
+                <el-table-column prop="receiver" align="center" label="麦克风接收器"></el-table-column>
+                <el-table-column prop="computer" align="center" label="电脑"></el-table-column>
+                <el-table-column prop="microphone" align="center" label="手持麦"></el-table-column>
+                <el-table-column prop="frequency1" align="center" label="大麦频率"></el-table-column>
+                <el-table-column prop="frequency2" align="center" label="小麦频率"></el-table-column>
+                <el-table-column prop="HDMI" label="HDMI状态" align="center">
+                    <template slot-scope="scope">
+                        <div slot="reference" class="name-wrapper">
+                            <el-tag size="medium" type="danger" v-if="scope.row.hdmi === '未安装'">{{scope.row.hdmi }}</el-tag>
+                            <el-tag size="medium" type="success" v-if="scope.row.hdmi === '已安装'">{{ scope.row.hdmi }}</el-tag>
+                            <el-tag size="medium" type="primary" v-if="scope.row.hdmi === 'HDMI线2条'">{{ scope.row.hdmi }}</el-tag>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="mark" align="center" label="备注"></el-table-column>
+                <el-table-column label="操作" width="180" align="center">
+                    <template slot-scope="scope">
+                        <el-button
+                                type="text"
+                                icon="el-icon-edit"
+                                @click="handleEdit1(scope.row)"
+                        >编辑</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-card>
+
             <el-card shadow="hover" style="margin-bottom: 20px;" >
                 <div slot="header" class="clearfix">
                     <span>故障现象</span>
@@ -154,7 +194,60 @@
             </span>
         </el-dialog>
 
-
+        <!-- 编辑弹出框 -->
+        <el-dialog
+                title="编辑教室设备"
+                :visible.sync="editVisible4"
+                width="30%"
+                :close-on-click-modal=false
+                :close-on-press-escape=false
+                :show-close=false
+        >
+            <el-form ref="form" :model="form3" label-width="70px">
+                <el-divider></el-divider>
+                <el-form-item label="教室">
+                    <el-input v-model="form3.room"></el-input>
+                </el-form-item>
+                <el-form-item label="投影仪">
+                    <el-input v-model="form3.projector"></el-input>
+                </el-form-item>
+                <el-form-item label="幕布">
+                    <el-input v-model="form3.curtain"></el-input>
+                </el-form-item>
+                <el-form-item label="功放">
+                    <el-input v-model="form3.amplifier"></el-input>
+                </el-form-item>
+                <el-form-item label="麦克风接收器">
+                    <el-input v-model="form3.receiver"></el-input>
+                </el-form-item>
+                <el-form-item label="电脑">
+                    <el-input v-model="form3.computer"></el-input>
+                </el-form-item>
+                <el-form-item label="手持麦">
+                    <el-input v-model="form3.microphone"></el-input>
+                </el-form-item>
+                <el-form-item label="大麦频率">
+                    <el-input v-model="form3.frequency1"></el-input>
+                </el-form-item>
+                <el-form-item label="小麦频率">
+                    <el-input v-model="form3.frequency2"></el-input>
+                </el-form-item>
+                <el-form-item label="HDMI状态" >
+                    <el-select v-model="form3.hdmi" placeholder="HDMI状态"  value="未安装">
+                        <el-option key="1" label="已安装" value="已安装"></el-option>
+                        <el-option key="2" label="未安装" value="未安装"></el-option>
+                        <el-option key="3" label="HDMI线2条" value="HDMI线2条"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="备注">
+                    <el-input v-model="form.mark"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="editVisible4 = false">取 消</el-button>
+                <el-button type="primary" @click="saveEdit4">确 定</el-button>
+            </span>
+        </el-dialog>
 
 
 
@@ -228,10 +321,26 @@
                     name: '',
                     state: '已处理',
                 },
+                form3: {
+                    id: 0,
+                    room: '',
+                    projector: '',
+                    curtain: '',
+                    amplifier: '',
+                    receiver: '',
+                    computer: '',
+                    microphone: '',
+                    frequency1: '',
+                    frequency2: '',
+                    hdmi: '',
+                    mark: '',
+                },
                 tableData: [],
                 tableData2: [],
+                tableData3: [],
                 editVisible2: false,
                 editVisible3: false,
+                editVisible4: false,
                 input2: '',
                 loading: true,
             };
@@ -274,6 +383,57 @@
                 var defaultDate = `${year}-${month}-${date}`;
                 this.$set(this.form2, "date", defaultDate);
                 this.editVisible3 = true;
+            },
+
+            handleEdit1(row) {
+                this.form3.id=row.id;
+                this.form3.room=row.room;
+                this.form3.projector=row.projector;
+                this.form3.curtain=row.curtain;
+                this.form3.amplifier=row.amplifier;
+                this.form3.receiver=row.receiver;
+                this.form3.computer=row.computer;
+                this.form3.microphone=row.microphone;
+                this.form3.frequency1=row.frequency1;
+                this.form3.frequency2=row.frequency2;
+                this.form3.hdmi=row.hdmi;
+                this.form3.mark=row.mark;
+                this.editVisible4=true;
+            },
+
+            saveEdit4() {
+                this.editVisible4 = false;
+                this.loading=true;
+                this.$axios.post('/ClassMachineEdit',{
+                    id: this.form3.id,
+                    room: this.form3.room,
+                    projector: this.form3.projector,
+                    curtain: this.form3.curtain,
+                    amplifier: this.form3.amplifier,
+                    receiver: this.form3.receiver,
+                    computer: this.form3.computer,
+                    microphone: this.form3.microphone,
+                    frequency1: this.form3.frequency1,
+                    frequency2: this.form3.frequency2,
+                    hdmi: this.form3.hdmi,
+                    mark: this.form3.mark,
+                }).then(res4=>{
+                    if (res4.data.code===200) {
+                        this.getData();
+                        this.$message.success('成功');
+                    } else if (res4.data.code===400) {
+                        this.$message.error('失败:' + res4.data.message);
+                    } else if (res4.data.code===403) {
+                        this.$message.error('失败:' + res4.data.message);
+                        this.loading=false;
+                        this.$router.push({path: '/login'});
+                    } else if (res4.data.code===500) {
+                        alert("请截图以下信息报给维护员: 出错位置：classMachine.saveEdit2 出错详情: " + res4.data.message);
+                    }
+                    this.loading=false;
+                }).catch(res5=>{
+                    this.$message.error(res5.message);
+                });
             },
 
             saveEdit() {
@@ -389,6 +549,38 @@
             },
 
             getData() {
+                this.$set(this.form3, "id", "0");
+                this.$set(this.form3, "room", "");
+                this.$set(this.form3, "projector", "");
+                this.$set(this.form3, "curtain", "");
+                this.$set(this.form3, "amplifier", "");
+                this.$set(this.form3, "receiver", "");
+                this.$set(this.form3, "computer", "");
+                this.$set(this.form3, "microphone", "");
+                this.$set(this.form3, "frequency1", "");
+                this.$set(this.form3, "frequency2", "");
+                this.$set(this.form3, "hdmi", "");
+                this.$set(this.form3, "mark", "");
+
+                this.loading = true;
+                this.$axios.post('/ClassMachineQuery',{
+                    room: this.$route.query.form.room,
+                }).then(res1=>{
+                    if (res1.data.code===200) {
+                        this.tableData3=res1.data.data;
+                        //this.$message.success('查询成功');
+                        this.loading = false;
+                    } else if (res1.data.code===403) {
+                        this.$message.error('查询失败:' + res1.data.message);
+                        this.loading=false;
+                        this.$router.push({path: '/login'});
+                    } else if (res1.data.code===500) {
+                        alert("请截图以下信息报给维护员: 出错位置：repairinfo.getdata 出错详情: " + res1.data.message);
+                    }
+                }).catch(res2=>{
+                    this.$message.error(res2.message);
+                });
+
 
                 //this.$message.success('查询成功');
                 this.form.id=this.$route.query.form.id;

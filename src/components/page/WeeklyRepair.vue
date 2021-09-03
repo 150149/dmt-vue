@@ -16,12 +16,13 @@
                     v-loading="loading"
             >
                 <el-table-column  width="55" align="center"  type="selection"></el-table-column>
-                <el-table-column prop="room" align="center" label="教室"></el-table-column>
-                <el-table-column prop="type" label="故障种类" align="center"></el-table-column>
-                <el-table-column prop="name" align="center" label="登记人员"></el-table-column>
-                <el-table-column prop="reason" align="center" label="故障现象"></el-table-column>
-                <el-table-column prop="deal" align="center" label="最后一条维修过程"></el-table-column>
-                <el-table-column prop="remarks" align="center" label="最后一条备注"></el-table-column>
+                <el-table-column prop="date" align="center" sortable label="登记时间"></el-table-column>
+                <el-table-column prop="room" align="center" sortable label="教室"></el-table-column>
+                <el-table-column prop="type" label="故障种类" sortable align="center"></el-table-column>
+                <el-table-column prop="name" align="center" sortable label="登记人员"></el-table-column>
+                <el-table-column prop="reason" align="center" sortable label="故障现象"></el-table-column>
+                <el-table-column prop="deal" align="center" sortable label="最后一条维修过程"></el-table-column>
+                <el-table-column prop="remarks" align="center" sortable label="最后一条备注"></el-table-column>
 
 
             </el-table>
