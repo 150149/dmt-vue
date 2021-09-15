@@ -60,6 +60,7 @@
                 <el-table-column prop="type" label="故障种类" align="center">
                 </el-table-column>
                 <el-table-column prop="name" align="center" label="登记人员"></el-table-column>
+                <el-table-column prop="reason" align="center" label="故障信息"></el-table-column>
                 <el-table-column prop="name2" align="center" label="维修人员"></el-table-column>
                 <el-table-column prop="deal" align="center" label="处理结果"></el-table-column>
                 <el-table-column prop="remarks" align="center" label="备注"></el-table-column>
@@ -442,6 +443,13 @@
                             }
                             if (that.query.class1!=="" && that.query.class1!==null) {
                                 defaultDate = defaultDate + "_" + that.query.class1;
+                            }
+
+                            if (that.query.date1 !=="" && that.query.date1 !==null) {
+                                defaultDate = defaultDate + "_" + that.query.date1 + "开始";
+                            }
+                            if (that.query.date2 !=="" && that.query.date2 !==null) {
+                                defaultDate = defaultDate + "_" + that.query.date2 + "结束";
                             }
 
                             try {
