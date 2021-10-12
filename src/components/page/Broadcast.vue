@@ -66,7 +66,7 @@
             <el-form ref="form" :model="form" label-width="70px">
                 <el-divider></el-divider>
                 <el-form-item label="公告内容">
-                    <el-input :disabled="show2" type="textarea" :autosize="{ minRows: 2, maxRows: 6}" v-model="form.info"></el-input>
+                    <el-input :disabled="show2" type="textarea" maxlength="128" show-word-limit  :autosize="{ minRows: 2, maxRows: 6}" v-model="form.info"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">

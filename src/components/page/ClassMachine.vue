@@ -18,6 +18,7 @@
                 <el-input v-model="schfilter" placeholder="要搜索的内容" class="handle-input mr10"></el-input>
                 <el-button  type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
                 <el-button  class="handle-select" @click="handleDownload" >下载</el-button>
+                当前有 {{this.tableData.length}} 条数据
             </div>
             <el-table
                     :data="tableData"
@@ -28,16 +29,16 @@
                     id="out-table"
             >
                 <el-table-column  width="55" align="center"  ></el-table-column>
-                <el-table-column prop="room" label="教室"  align="center"></el-table-column>
-                <el-table-column prop="projector" align="center" label="投影仪"></el-table-column>
-                <el-table-column prop="curtain" align="center" label="幕布"></el-table-column>
-                <el-table-column prop="amplifier" label="功放" align="center"></el-table-column>
-                <el-table-column prop="receiver" align="center" label="麦克风接收器"></el-table-column>
-                <el-table-column prop="computer" align="center" label="电脑"></el-table-column>
-                <el-table-column prop="microphone" align="center" label="手持麦"></el-table-column>
-                <el-table-column prop="frequency1" align="center" label="大麦频率"></el-table-column>
-                <el-table-column prop="frequency2" align="center" label="小麦频率"></el-table-column>
-                <el-table-column prop="HDMI" label="HDMI状态" align="center">
+                <el-table-column prop="room" label="教室" sortable align="center"></el-table-column>
+                <el-table-column prop="projector" align="center" sortable label="投影仪"></el-table-column>
+                <el-table-column prop="curtain" align="center" sortable label="幕布"></el-table-column>
+                <el-table-column prop="amplifier" label="功放" sortable align="center"></el-table-column>
+                <el-table-column prop="receiver" align="center" sortable label="麦克风接收器"></el-table-column>
+                <el-table-column prop="computer" align="center" sortable label="电脑"></el-table-column>
+                <el-table-column prop="microphone" align="center" sortable label="手持麦"></el-table-column>
+                <el-table-column prop="frequency1" align="center" sortable label="大麦频率"></el-table-column>
+                <el-table-column prop="frequency2" align="center" sortable label="小麦频率"></el-table-column>
+                <el-table-column prop="HDMI" label="HDMI状态" sortable align="center">
                     <template slot-scope="scope">
                         <div slot="reference" class="name-wrapper">
                             <el-tag size="medium" type="danger" v-if="scope.row.hdmi === '未安装'">{{scope.row.hdmi }}</el-tag>
@@ -46,7 +47,7 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="mark" align="center" label="备注"></el-table-column>
+                <el-table-column prop="mark" align="center" sortable label="备注"></el-table-column>
 
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
